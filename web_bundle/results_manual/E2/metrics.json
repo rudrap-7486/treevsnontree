@@ -1,0 +1,35 @@
+{
+  "n_points": 11600706,
+  "TP": 4390856,
+  "FP": 71624,
+  "FN": 2434642,
+  "TN": 4703584,
+  "precision_tree": 0.9839497319875944,
+  "recall_tree": 0.6433019246361218,
+  "f1_tree": 0.777970332684915,
+  "iou_tree": 0.6366214777700032,
+  "precision_nontree": 0.6589289831955447,
+  "recall_nontree": 0.9850008627896418,
+  "f1_nontree": 0.7896269035443517,
+  "iou_nontree": 0.6523830592869477,
+  "miou": 0.6445022685284755,
+  "overall_accuracy": 0.783955735107846,
+  "kappa": 0.5848357908227445,
+  "experiment": "E2",
+  "note": "E1 + height above ground (CSF, Zhang et al. 2016)",
+  "n_features": 9,
+  "train_points": 4136019,
+  "train_tree_share": 0.2544342760514398,
+  "test_tiles": [
+    "tile05",
+    "tile06"
+  ],
+  "train_tiles": [
+    "man01",
+    "man02",
+    "man03"
+  ],
+  "label_source": "Team hand labels (areas 1-3)",
+  "feature_time_train_s": 14.68,
+  "train_time_s": 34.41
+}

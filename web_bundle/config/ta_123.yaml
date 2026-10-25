@@ -1,0 +1,33 @@
+# CONTROL for the team-label version: identical areas (train 1-3, test 5-6) but trained on the
+# TA's labels instead of the team's. Comparing results_ta123/E4 with results_manual/E4 isolates
+# the effect of the LABELS alone, because data, areas, features and model settings are identical.
+
+label_source: "TA labels (areas 1-3)"
+
+data:
+  tiles_dir: data/tiles
+  train: [tile01, tile02, tile03]
+  test:  [tile05, tile06]
+
+cache_dir: cache
+results_dir: results_ta123
+models_dir: models_ta123
+
+ground:                          # CSF ground filter (Zhang et al. 2016)
+  cloth_resolution: 0.5          # metres; smaller = follows terrain more closely
+  rigidness: 2                   # 1 = steep slopes, 2 = relief, 3 = flat
+  class_threshold: 0.5           # metres from the cloth to count as ground
+  slope_smooth: false
+  iterations: 500
+
+random_forest:
+  n_estimators: 100
+  max_depth: null                # null = grow fully
+  min_samples_leaf: 5            # >1 keeps the model file small and reduces overfitting
+  class_weight: balanced         # trees are usually the minority class
+  random_state: 42               # fixed seed => identical results every run
+  max_train_points: 500000       # random subsample of training points for speed
+
+experiments:
+  E1: {radii: [0.5], hag: false, extras: [], note: "Baseline: single-scale eigen features (Weinmann et al. 2015)"}
+  E4: {radii: [0.25, 0.5, 1.0, 2.0], hag: true,  extras: [], note: "Proposed: multi-scale + height above ground"}

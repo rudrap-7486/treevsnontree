@@ -1,0 +1,17 @@
+# Use Python 3.12. The ground-filter library (cloth-simulation-filter 1.1.7) ships ready-made
+# installers only for Python 3.10-3.12 on Windows, Linux and Apple-silicon Macs.
+# Exact versions tested together on Python 3.12 (the Docker image uses python:3.12-slim).
+numpy==2.5.4
+scipy==1.18.1
+pandas==3.0.6
+scikit-learn==1.9.1
+joblib==1.6.0
+matplotlib==3.11.2
+PyYAML==6.0.3
+laspy[lazrs]==2.7.0
+cloth-simulation-filter==1.1.7
+streamlit==1.65.0
+plotly==7.1.0
+# For running project_workflow.ipynb in VS Code / Jupyter
+ipykernel==7.4.0
+nbformat==5.11.1

@@ -1,0 +1,34 @@
+{
+  "n_points": 4469274,
+  "TP": 2254208,
+  "FP": 91610,
+  "FN": 158789,
+  "TN": 1964667,
+  "precision_tree": 0.9609475244882595,
+  "recall_tree": 0.9341942820484236,
+  "f1_tree": 0.9473820688553768,
+  "iou_tree": 0.9000246346033529,
+  "precision_nontree": 0.9252214314777419,
+  "recall_nontree": 0.9554486093070146,
+  "f1_nontree": 0.940092106361818,
+  "iou_nontree": 0.8869564157456257,
+  "miou": 0.8934905251744893,
+  "overall_accuracy": 0.9439732269715394,
+  "kappa": 0.8874997006659323,
+  "experiment": "E2",
+  "note": "E1 + height above ground (CSF, Zhang et al. 2016)",
+  "n_features": 9,
+  "train_points": 14967277,
+  "train_tree_share": 0.5134819780511846,
+  "test_tiles": [
+    "tile02",
+    "tile06"
+  ],
+  "train_tiles": [
+    "tile01",
+    "tile03",
+    "tile05"
+  ],
+  "feature_time_train_s": 583.31,
+  "train_time_s": 32.14
+}

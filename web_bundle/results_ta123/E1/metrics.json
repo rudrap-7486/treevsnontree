@@ -1,0 +1,35 @@
+{
+  "n_points": 11600706,
+  "TP": 6071427,
+  "FP": 495001,
+  "FN": 754071,
+  "TN": 4280207,
+  "precision_tree": 0.9246163972254017,
+  "recall_tree": 0.8895214678841017,
+  "f1_tree": 0.9067294726688305,
+  "iou_tree": 0.8293733801479927,
+  "precision_nontree": 0.8502126819377078,
+  "recall_nontree": 0.8963393845880641,
+  "f1_nontree": 0.8726669266870865,
+  "iou_nontree": 0.7740985759626164,
+  "miou": 0.8017359780553046,
+  "overall_accuracy": 0.8923279324551454,
+  "kappa": 0.7795090505307346,
+  "experiment": "E1",
+  "note": "Baseline: single-scale eigen features (Weinmann et al. 2015)",
+  "n_features": 8,
+  "train_points": 7835845,
+  "train_tree_share": 0.41768641416464974,
+  "test_tiles": [
+    "tile05",
+    "tile06"
+  ],
+  "train_tiles": [
+    "tile01",
+    "tile02",
+    "tile03"
+  ],
+  "label_source": "TA labels (areas 1-3)",
+  "feature_time_train_s": 1.48,
+  "train_time_s": 31.85
+}

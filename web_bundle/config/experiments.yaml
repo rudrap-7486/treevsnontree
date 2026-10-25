@@ -1,0 +1,42 @@
+# Every parameter of the project lives here. Change values here, never inside the code.
+# Results are only comparable if every experiment uses the SAME train/test tiles.
+
+data:
+  tiles_dir: data/tiles          # put <tile>_tree.las and <tile>_nontree.las here
+  # Fix the split BEFORE looking at any result. Never move a tile because it scored badly.
+  # tileNN = TA area in_N (made by scripts/make_labels.py). Areas 1 and 5 are the largest,
+  # so they go to training; 2 and 6 are held out as the unseen "exam" areas.
+  train: [tile01, tile03, tile05]
+  test:  [tile02, tile06]
+
+cache_dir: cache                 # features are cached here so re-runs are fast
+results_dir: results
+models_dir: models
+
+ground:                          # CSF ground filter (Zhang et al. 2016)
+  cloth_resolution: 0.5          # metres; smaller = follows terrain more closely
+  rigidness: 2                   # 1 = steep slopes, 2 = relief, 3 = flat
+  class_threshold: 0.5           # metres from the cloth to count as ground
+  slope_smooth: false
+  iterations: 500
+
+random_forest:
+  n_estimators: 100
+  max_depth: null                # null = grow fully
+  min_samples_leaf: 5            # >1 keeps the model file small and reduces overfitting
+  class_weight: balanced         # trees are usually the minority class
+  random_state: 42               # fixed seed => identical results every run
+  max_train_points: 500000       # random subsample of training points for speed
+
+experiments:
+  E1: {radii: [0.5], hag: false, extras: [], note: "Baseline: single-scale eigen features (Weinmann et al. 2015)"}
+  E2: {radii: [0.5], hag: true,  extras: [], note: "E1 + height above ground (CSF, Zhang et al. 2016)"}
+  E3: {radii: [0.25, 0.5, 1.0, 2.0], hag: false, extras: [], note: "Multi-scale eigen features (Hackel et al. 2016)"}
+  E4: {radii: [0.25, 0.5, 1.0, 2.0], hag: true,  extras: [], note: "Proposed: multi-scale + height above ground"}
+  E5: {radii: [0.25, 0.5, 1.0, 2.0], hag: true,  extras: [intensity, rgb], note: "E4 + intensity/RGB (only if the data has them)"}
+  E6: {radii: [0.25, 0.5, 1.0, 2.0], hag: true,  extras: [], smoothing_k: 10, note: "E4 + kNN majority smoothing"}
+  # Radius sensitivity of the baseline (plot F1 vs radius)
+  R0.25: {radii: [0.25], hag: false, extras: [], note: "Baseline at r = 0.25 m"}
+  R0.5:  {radii: [0.5],  hag: false, extras: [], note: "Baseline at r = 0.5 m"}
+  R1.0:  {radii: [1.0],  hag: false, extras: [], note: "Baseline at r = 1.0 m"}
+  R2.0:  {radii: [2.0],  hag: false, extras: [], note: "Baseline at r = 2.0 m"}

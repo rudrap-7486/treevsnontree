@@ -1,0 +1,1 @@
+Online copy of the dashboard. Point clouds are random samples of at most 500,000 points.

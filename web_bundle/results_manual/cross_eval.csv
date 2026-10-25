@@ -1,0 +1,4 @@
+name,model,trained_on_areas,tested_tile,reference_labels,seen_in_training,precision_tree,recall_tree,f1_tree,iou_tree,miou,overall_accuracy,kappa
+TA-trained E4 vs our labels,models/E4.joblib,1 3 5,man01,team hand labels,yes,0.5335,0.8165,0.6453,0.4764,0.6320,0.8220,0.5334
+TA-trained E4 vs our labels,models/E4.joblib,1 3 5,man02,team hand labels,no,0.6118,0.9542,0.7456,0.5944,0.6577,0.8020,0.5958
+TA-trained E4 vs our labels,models/E4.joblib,1 3 5,man03,team hand labels,yes,0.5347,0.9785,0.6915,0.5285,0.5802,0.7394,0.4975

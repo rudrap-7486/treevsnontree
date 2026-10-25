@@ -1,0 +1,11 @@
+experiment,note,n_features,precision_tree,recall_tree,f1_tree,iou_tree,iou_nontree,miou,overall_accuracy,kappa,train_time_s
+E1,Baseline: single-scale eigen features (Weinmann et al. 2015),8,0.9558,0.6236,0.7548,0.6061,0.6234,0.6148,0.7616,0.5420,23.5600
+E2,"E1 + height above ground (CSF, Zhang et al. 2016)",9,0.9839,0.6433,0.7780,0.6366,0.6524,0.6445,0.7840,0.5848,34.4100
+E3,Multi-scale eigen features (Hackel et al. 2016),32,0.9719,0.6316,0.7656,0.6203,0.6379,0.6291,0.7725,0.5631,57.2300
+E4,Proposed: multi-scale + height above ground,33,0.9852,0.6420,0.7774,0.6358,0.6524,0.6441,0.7837,0.5845,55.3000
+E5,E4 + intensity/RGB (only if the data has them),37,0.9851,0.6416,0.7771,0.6355,0.6521,0.6438,0.7835,0.5841,60.5700
+E6,E4 + kNN majority smoothing,33,0.9864,0.6704,0.7983,0.6642,0.6708,0.6675,0.8006,0.6149,53.2100
+R0.25,Baseline at r = 0.25 m,8,0.9355,0.7535,0.8347,0.7163,0.6846,0.7005,0.8244,0.6521,25.8000
+R0.5,Baseline at r = 0.5 m,8,0.9558,0.6236,0.7548,0.6061,0.6234,0.6148,0.7616,0.5420,23.3300
+R1.0,Baseline at r = 1.0 m,8,0.9460,0.7826,0.8566,0.7491,0.7142,0.7317,0.8458,0.6931,29.5300
+R2.0,Baseline at r = 2.0 m,8,0.9158,0.8561,0.8849,0.7936,0.7361,0.7649,0.8690,0.7333,31.9000

@@ -1,0 +1,4 @@
+area,team_tile,ta_tile,team_points,team_points_matched_pct,ta_points_covered_by_team_pct,team_tree_share_pct,ta_tree_share_pct,precision_tree,recall_tree,f1_tree,iou_tree,overall_accuracy,kappa,TP,FP,FN,TN
+area01,man01,tile01,1867886,99.8100,99.9700,19.8100,25.8600,0.7254,0.5557,0.6293,0.4591,0.8307,0.5221,267897,101426,214193,1280900
+area02,man02,tile02,880413,99.6900,77.0400,30.4000,47.6400,0.9500,0.6062,0.7401,0.5874,0.7972,0.5867,253467,13335,164681,446189
+area03,man03,tile03,1387720,99.6900,99.9600,29.8400,54.3800,0.9731,0.5340,0.6896,0.5262,0.7386,0.4949,401706,11084,350610,620030

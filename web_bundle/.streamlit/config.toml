@@ -1,0 +1,2 @@
+[server]
+maxUploadSize = 200   # MB; the free online host has limited memory

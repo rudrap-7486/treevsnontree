@@ -1,0 +1,34 @@
+{
+  "n_points": 4469274,
+  "TP": 2303247,
+  "FP": 60960,
+  "FN": 109750,
+  "TN": 1995317,
+  "precision_tree": 0.9742154557532399,
+  "recall_tree": 0.9545171419608064,
+  "f1_tree": 0.9642657085609071,
+  "iou_tree": 0.9309971838637454,
+  "precision_nontree": 0.9478638922181575,
+  "recall_nontree": 0.9703541886623251,
+  "f1_nontree": 0.9589771958290398,
+  "iou_nontree": 0.9211875013561697,
+  "miou": 0.9260923426099575,
+  "overall_accuracy": 0.9618036396962907,
+  "kappa": 0.923252094501067,
+  "experiment": "E4",
+  "note": "Proposed: multi-scale + height above ground",
+  "n_features": 33,
+  "train_points": 14967277,
+  "train_tree_share": 0.5134819780511846,
+  "test_tiles": [
+    "tile02",
+    "tile06"
+  ],
+  "train_tiles": [
+    "tile01",
+    "tile03",
+    "tile05"
+  ],
+  "feature_time_train_s": 7.3,
+  "train_time_s": 58.69
+}
