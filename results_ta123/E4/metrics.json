@@ -30,6 +30,6 @@
     "tile03"
   ],
   "label_source": "TA labels (areas 1-3)",
-  "feature_time_train_s": 3.45,
-  "train_time_s": 57.88
+  "feature_time_train_s": 3.12,
+  "train_time_s": 57.48
 }

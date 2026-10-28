@@ -1,0 +1,35 @@
+{
+  "n_points": 11600706,
+  "TP": 6533008,
+  "FP": 237010,
+  "FN": 292490,
+  "TN": 4538198,
+  "precision_tree": 0.9649912304516768,
+  "recall_tree": 0.9571474491678117,
+  "f1_tree": 0.9610533355262132,
+  "iou_tree": 0.9250266335981495,
+  "precision_nontree": 0.9394516888691632,
+  "recall_nontree": 0.9503665599488023,
+  "f1_nontree": 0.9448776043380025,
+  "iou_nontree": 0.8955146893125834,
+  "miou": 0.9102706614553664,
+  "overall_accuracy": 0.9543562262503679,
+  "kappa": 0.905933156916312,
+  "experiment": "E3",
+  "note": "Multi-scale eigen features (Hackel et al. 2016)",
+  "n_features": 32,
+  "train_points": 7835845,
+  "train_tree_share": 0.41768641416464974,
+  "test_tiles": [
+    "tile05",
+    "tile06"
+  ],
+  "train_tiles": [
+    "tile01",
+    "tile02",
+    "tile03"
+  ],
+  "label_source": "TA labels (areas 1-3)",
+  "feature_time_train_s": 3.23,
+  "train_time_s": 54.5
+}

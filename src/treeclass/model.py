@@ -55,14 +55,20 @@ def load_model(path) -> tuple[RandomForestClassifier, dict]:
 
 def canopy_maps(xyz: np.ndarray, is_tree: np.ndarray, hag: np.ndarray | None,
                 cell: float = 1.0, block: int = 10) -> dict:
-    """2D products from a classified cloud.
+    """2D products from a classified cloud, measured over the SCANNED area only.
 
-    cover_pct : % of 1 m cells (cell) with tree points, per block x block cells (10 m by default)
+    A street-level scan covers strips along the scanner's path; the rest of its bounding box
+    holds no data, so it must not count as "no trees".
+    cover_pct : per block x block cells (10 m by default), % of the SCANNED 1 m cells that hold
+                tree points; NaN (drawn blank) where the block holds no scanned cell
     height    : max height above ground of tree points per 1 m cell (NaN where no tree)
+    canopy_cover_total_pct : tree cells / scanned cells, in %
     """
     xy0 = xyz[:, :2].min(axis=0)
     ij = np.floor((xyz[:, :2] - xy0) / cell).astype(np.int64)
     nx, ny = ij.max(axis=0) + 1
+    scanned = np.zeros((ny, nx), dtype=bool)
+    scanned[ij[:, 1], ij[:, 0]] = True              # any point at all = this cell was scanned
     tree_mask = np.zeros((ny, nx), dtype=bool)
     t = is_tree.astype(bool)
     tree_mask[ij[t, 1], ij[t, 0]] = True
@@ -76,8 +82,15 @@ def canopy_maps(xyz: np.ndarray, is_tree: np.ndarray, hag: np.ndarray | None,
         height = hmax.reshape(ny, nx).astype(np.float32)
 
     by, bx = int(np.ceil(ny / block)), int(np.ceil(nx / block))
-    padded = np.zeros((by * block, bx * block), dtype=float)
-    padded[:ny, :nx] = tree_mask
-    cover = padded.reshape(by, block, bx, block).mean(axis=(1, 3)) * 100.0
+    pad_tree = np.zeros((by * block, bx * block), dtype=float)
+    pad_scan = np.zeros((by * block, bx * block), dtype=float)
+    pad_tree[:ny, :nx] = tree_mask
+    pad_scan[:ny, :nx] = scanned
+    n_tree = pad_tree.reshape(by, block, bx, block).sum(axis=(1, 3))
+    n_scan = pad_scan.reshape(by, block, bx, block).sum(axis=(1, 3))
+    with np.errstate(invalid="ignore", divide="ignore"):
+        cover = np.where(n_scan > 0, n_tree / n_scan * 100.0, np.nan)
+    n_scanned = int(scanned.sum())
     return {"cover_pct": cover, "height": height, "origin": xy0, "cell": cell, "block": block,
-            "canopy_cover_total_pct": float(tree_mask.mean() * 100.0)}
+            "scanned_area_m2": float(n_scanned * cell * cell),
+            "canopy_cover_total_pct": float(tree_mask.sum() / max(n_scanned, 1) * 100.0)}

@@ -1,6 +1,6 @@
-# CONTROL for the team-label version: identical areas (train 1-3, test 5-6) but trained on the
-# TA's labels instead of the team's. Comparing results_ta123/E4 with results_manual/E4 isolates
-# the effect of the LABELS alone, because data, areas, features and model settings are identical.
+# TA-LABEL VERSION: train on the TA's labels of areas 1-3, test on areas 5 and 6. Identical to
+# config/manual.yaml (the team's own labels) in areas, features and settings, so every experiment
+# compares the two label sources one to one: only who drew the training labels differs.
 
 label_source: "TA labels (areas 1-3)"
 
@@ -30,4 +30,13 @@ random_forest:
 
 experiments:
   E1: {radii: [0.5], hag: false, extras: [], note: "Baseline: single-scale eigen features (Weinmann et al. 2015)"}
+  E2: {radii: [0.5], hag: true,  extras: [], note: "E1 + height above ground (CSF, Zhang et al. 2016)"}
+  E3: {radii: [0.25, 0.5, 1.0, 2.0], hag: false, extras: [], note: "Multi-scale eigen features (Hackel et al. 2016)"}
   E4: {radii: [0.25, 0.5, 1.0, 2.0], hag: true,  extras: [], note: "Proposed: multi-scale + height above ground"}
+  E5: {radii: [0.25, 0.5, 1.0, 2.0], hag: true,  extras: [intensity, rgb], note: "E4 + intensity/RGB (only if the data has them)"}
+  E6: {radii: [0.25, 0.5, 1.0, 2.0], hag: true,  extras: [], smoothing_k: 10, note: "E4 + kNN majority smoothing"}
+  # Radius sensitivity of the baseline (plot F1 vs radius)
+  R0.25: {radii: [0.25], hag: false, extras: [], note: "Baseline at r = 0.25 m"}
+  R0.5:  {radii: [0.5],  hag: false, extras: [], note: "Baseline at r = 0.5 m"}
+  R1.0:  {radii: [1.0],  hag: false, extras: [], note: "Baseline at r = 1.0 m"}
+  R2.0:  {radii: [2.0],  hag: false, extras: [], note: "Baseline at r = 2.0 m"}

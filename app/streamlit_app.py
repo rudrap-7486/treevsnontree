@@ -29,7 +29,7 @@ from treeclass.pipeline import classify_cloud           # noqa: E402
 
 # Which labels taught the model. Each version has its own config, results and models folders;
 # only versions that already have results are offered.
-VERSIONS = ["config/experiments.yaml", "config/manual.yaml", "config/ta_123.yaml"]
+VERSIONS = ["config/ta_123.yaml", "config/manual.yaml"]
 
 
 def load_cfg(rel: str) -> dict:
@@ -123,7 +123,7 @@ areas the model never saw during training.
 **Pipeline**
 1. Ground filter (Cloth Simulation Filter) → height of every point above the ground
 2. Eigenvalue shape features (linearity, planarity, sphericity, ...) at one or several radii
-3. Random Forest classifier trained on hand-labelled tiles
+3. Random Forest classifier trained on labelled areas (the TA's labels or our own)
 4. Accuracy assessment on held-out tiles: precision, recall, F1, IoU
 5. Canopy-cover and canopy-height maps for the whole area
 """
@@ -131,11 +131,16 @@ areas the model never saw during training.
     summary = RESULTS / "summary.csv"
     if summary.exists():
         df = pd.read_csv(summary)
+        main = df[df["experiment"] == "E4"]
+        final = main.iloc[0] if len(main) else df.loc[df["f1_tree"].idxmax()]
         best = df.loc[df["f1_tree"].idxmax()]
         c1, c2, c3 = st.columns(3)
-        c1.metric("Best experiment", best["experiment"])
-        c2.metric("Tree F1 on unseen tiles", f"{best['f1_tree']:.3f}")
-        c3.metric("Tree IoU on unseen tiles", f"{best['iou_tree']:.3f}")
+        c1.metric("Final model", final["experiment"])
+        c2.metric("Tree F1 on unseen areas", f"{final['f1_tree']:.3f}")
+        c3.metric("Tree IoU on unseen areas", f"{final['iou_tree']:.3f}")
+        if best["experiment"] != final["experiment"]:
+            st.caption(f"Highest-scoring experiment in this version: {best['experiment']} "
+                       f"(F1 {best['f1_tree']:.3f}). See the Accuracy page for why it is not the final model.")
 
 elif page == "3D viewer":
     st.title("Ground truth vs prediction")
@@ -194,12 +199,13 @@ elif page == "Tree map":
     maps = canopy_maps(xyz, df["pred"].to_numpy(), hag)
     c1, c2, c3 = st.columns(3)
     c1.metric("Points", f"{len(df):,}")
-    c2.metric("Canopy cover (1 m cells)", f"{maps['canopy_cover_total_pct']:.1f}%")
+    c2.metric("Canopy cover of the scanned area", f"{maps['canopy_cover_total_pct']:.1f}%")
     if hag is not None and np.isfinite(maps["height"]).any():
         c3.metric("Tallest tree point", f"{np.nanmax(maps['height']):.1f} m")
     a, b = st.columns(2)
     a.plotly_chart(px.imshow(maps["cover_pct"], origin="lower", color_continuous_scale="Greens",
-                             labels={"color": "Cover %"}, title="Tree cover per 10 m cell (%)"),
+                             labels={"color": "Cover %"},
+                             title="Tree cover per 10 m cell (% of scanned area; blank = not scanned)"),
                    use_container_width=True)
     if hag is not None:
         b.plotly_chart(px.imshow(maps["height"], origin="lower", color_continuous_scale="Viridis",
@@ -215,7 +221,7 @@ elif page == "TA vs team labels":
 The team labelled areas 1–3 by hand in CloudCompare. Two questions:
 
 1. **How close are our labels to the TA's?** Point-by-point agreement on areas 1–3.
-2. **Does a model taught by our labels work as well?** Both models are trained on areas 1–3 with the
+2. **Does a model taught by our labels work as well?** Both versions are trained on areas 1–3 with the
    same features and settings, and tested on the same unseen areas 5 and 6 (TA reference labels).
    The only difference is who drew the labels.
 """
@@ -265,17 +271,8 @@ The team labelled areas 1–3 by hand in CloudCompare. Two questions:
         fig.update_yaxes(range=[0, 1])
         st.plotly_chart(fig, use_container_width=True)
     else:
-        st.info("Run the team-label experiments (config/manual.yaml) and the control "
-                "(config/ta_123.yaml) to fill this comparison.")
-
-    cross = ROOT / "results_manual" / "cross_eval.csv"
-    if cross.exists():
-        st.subheader("3 · The original TA-trained model checked against our labels")
-        cx = pd.read_csv(cross)
-        st.dataframe(cx.style.format({c: "{:.3f}" for c in cx.columns if cx[c].dtype == float}),
-                     use_container_width=True, hide_index=True)
-        st.caption("Rows with seen_in_training = yes are areas the model learned from, so they show agreement, "
-                   "not a fair test.")
+        st.info("Run the experiments for both versions (config/ta_123.yaml and config/manual.yaml) "
+                "to fill this comparison.")
 
 elif page == "Try it":
     st.title("Classify your own tile")

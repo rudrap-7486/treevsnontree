@@ -1,0 +1,35 @@
+{
+  "n_points": 11600706,
+  "TP": 6041321,
+  "FP": 477282,
+  "FN": 784177,
+  "TN": 4297926,
+  "precision_tree": 0.9267815512004642,
+  "recall_tree": 0.8851106541969538,
+  "f1_tree": 0.9054669175540563,
+  "iou_tree": 0.8272631792276366,
+  "precision_nontree": 0.8456983260669845,
+  "recall_nontree": 0.9000500082928324,
+  "f1_nontree": 0.8720280814920011,
+  "iou_nontree": 0.773093786452998,
+  "miou": 0.8001784828403173,
+  "overall_accuracy": 0.8912601526148495,
+  "kappa": 0.777654205535426,
+  "experiment": "R1.0",
+  "note": "Baseline at r = 1.0 m",
+  "n_features": 8,
+  "train_points": 7835845,
+  "train_tree_share": 0.41768641416464974,
+  "test_tiles": [
+    "tile05",
+    "tile06"
+  ],
+  "train_tiles": [
+    "tile01",
+    "tile02",
+    "tile03"
+  ],
+  "label_source": "TA labels (areas 1-3)",
+  "feature_time_train_s": 1.01,
+  "train_time_s": 23.15
+}
